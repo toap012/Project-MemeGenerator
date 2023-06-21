@@ -36,15 +36,16 @@ function renderMeme() {
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
         // width: 400px , height: 427/640 * 400 = 266px
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText(getMeme().lines[0].txt, gElCanvas.width / 2, 100)
+        drawText(getMemeLine().txt, gElCanvas.width / 2, 100)
     }
 }
 
 function drawText(text, x, y) {
+    const line = getMemeLine()
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'brown'
-    gCtx.fillStyle = 'black'
-    gCtx.font = '40px Arial'
+    gCtx.strokeStyle = 'black'
+    gCtx.fillStyle = line.color
+    gCtx.font = `${line.size}px Arial`
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
 
@@ -59,6 +60,32 @@ function onImgClick(elImg) {
     const imgId = +elImg.dataset.id
     setMemeImg(imgId)
     renderMeme()
+    _onEditorPage()
+    resizeCanvas()
+}
 
+function onHomePage() {
+    document.querySelector('.gallery').classList.remove('hide')
+    document.querySelector('.editor').classList.add('hide')
+}
+function onDownloadMeme(elLink) {
+    const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
+    elLink.href = memeContent
+}
+function onSetTxtColor(value) {
+    setTxtColor(value)
+    renderMeme()
+}
+function onIncreaseFontSize(){
+    increaseFontSize()
+    renderMeme()
+}
+function onDecreaseFontSize(){
+    decreaseFontSize()
+    renderMeme()
+}
+function _onEditorPage() {
+    document.querySelector('.gallery').classList.add('hide')
+    document.querySelector('.editor').classList.remove('hide')
 
 }

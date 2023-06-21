@@ -5,3 +5,14 @@
 body{
     background-color: cadetblue;
 }
+
+
+
+
+
+
+
+/*helpers*/
+.hide{
+    display: none;
+}

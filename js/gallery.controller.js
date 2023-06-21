@@ -2,17 +2,14 @@
 renderGallery()
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container')
-    const strHTMLS = `
-    <img src="img/meme-imgs (square)/1.jpg" alt="meme-img" class="gallery-item" data-id="1" onclick="onImgClick(this)">
-    <img src="img/meme-imgs (square)/2.jpg" alt="meme-img" class="gallery-item" data-id="2" onclick="onImgClick(this)">
-    <img src="img/meme-imgs (square)/3.jpg" alt="meme-img" class="gallery-item" data-id="3" onclick="onImgClick(this)">
-    <img src="img/meme-imgs (square)/4.jpg" alt="meme-img" class="gallery-item" data-id="4" onclick="onImgClick(this)">
-    
-    `
+    const imgUrls = getImgsToDisplay()
+    const strHTMLS = []
+    var id = 1
+    imgUrls.map(imgUrl => {
+        strHTMLS.push(`<img src='${imgUrl}'class="gallery-item" data-id="${id}" onclick="onImgClick(this)">`)
+        id++
 
-
-
-
-    elGallery.innerHTML = strHTMLS
+    })
+    elGallery.innerHTML = strHTMLS.join('')
 }
 
