@@ -42,12 +42,15 @@ function renderMeme() {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         const lines = getMemeLines()
         lines.forEach(line => {
-            drawText(line, gElCanvas.width / 2)
+            drawText(line)
         })
+        const line = getMemeLine()
+        console.log(line)
+        drawBorder(line)
     }
 }
 
-function drawText(line, x) {
+function drawText(line) {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
@@ -55,21 +58,20 @@ function drawText(line, x) {
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
 
-    gCtx.fillText(line.txt, x, line.hight) // Draws (fills) a given text at the given (x, y) position.
-    gCtx.strokeText(line.txt, x, line.hight) // Draws (strokes) a given text at the given (x, y) position.
+    gCtx.fillText(line.txt, line.pos.x, line.pos.y) // Draws (fills) a given text at the given (x, y) position.
+    gCtx.strokeText(line.txt, line.pos.x, line.pos.y) // Draws (strokes) a given text at the given (x, y) position.
 
     // console.log(gCtx)
-    var newBordersCords = drawBorder(x, line.size, line.hight)
-    setBorder(newBordersCords)
+    // setBorder(newBordersCords)
 }
-function drawBorder(x, size, hight) {
+function drawBorder(line) {
     // console.log(size)
     // console.log(hight)
     const borderCords = { xS: 0, yS: 0, xE: 0, yE: 0, id: gId }
-    borderCords.xS = x / 2 - size * 3.5 + 60 * 3.5
-    borderCords.yS = hight + 10 - size
-    borderCords.xE = x + size * 8 - 60 * 8
-    borderCords.yE = size * 2 - 20
+    borderCords.xS = line.pos.x / 2 - line.size * 3.5 + 60 * 3.5
+    borderCords.yS = line.pos.y + 10 - line.size
+    borderCords.xE = line.pos.x + line.size * 8 - 60 * 8
+    borderCords.yE = line.size * 2 - 20
     gCtx.strokeStyle = 'rgba(255, 255, 255, 0.353)'
     gCtx.strokeRect(borderCords.xS, borderCords.yS, borderCords.xE, borderCords.yE)
 
@@ -112,14 +114,24 @@ function onAddLine() {
     addLine()
     renderMeme()
 }
+function onSwitchLine() {
+    switchLine()
+    renderMeme()
+
+}
 function onClick(ev) {
-    console.log(ev);
     const pos = getEvPos(ev)
-    isBorderClicked(pos)
+    if (!isLineClicked(pos)) return
+    renderMeme()
+    
+}
+function onDown(ev) {
+    const pos = getEvPos(ev)
+
 }
 
 function getEvPos(ev) {
-    console.log(ev)
+    // console.log(ev)
 
     let pos = {
         x: ev.offsetX,
@@ -147,7 +159,7 @@ function _onEditorPage() {
 //listener//
 function _addMouseListeners() {
     gElCanvas.addEventListener('click', onClick)
-    // gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousedown', onDown)
     // gElCanvas.addEventListener('mousemove', onMove)
     // gElCanvas.addEventListener('mouseup', onUp)
 }
