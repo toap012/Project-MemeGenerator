@@ -1,6 +1,8 @@
 'use strict'
 let gElCanvas
 let gCtx
+let gId = 1
+const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
     gElCanvas = document.querySelector('canvas')
@@ -9,6 +11,8 @@ function onInit() {
     resizeCanvas()
     renderCanvas()
     renderMeme()
+    _addMouseListeners()
+    _addTouchListeners()
 
 
     window.addEventListener('resize', () => {
@@ -53,6 +57,23 @@ function drawText(line, x) {
 
     gCtx.fillText(line.txt, x, line.hight) // Draws (fills) a given text at the given (x, y) position.
     gCtx.strokeText(line.txt, x, line.hight) // Draws (strokes) a given text at the given (x, y) position.
+
+    // console.log(gCtx)
+    var newBordersCords = drawBorder(x, line.size, line.hight)
+    setBorder(newBordersCords)
+}
+function drawBorder(x, size, hight) {
+    // console.log(size)
+    // console.log(hight)
+    const borderCords = { xS: 0, yS: 0, xE: 0, yE: 0, id: gId }
+    borderCords.xS = x / 2 - size * 3.5 + 60 * 3.5
+    borderCords.yS = hight + 10 - size
+    borderCords.xE = x + size * 8 - 60 * 8
+    borderCords.yE = size * 2 - 20
+    gCtx.strokeStyle = 'rgba(255, 255, 255, 0.353)'
+    gCtx.strokeRect(borderCords.xS, borderCords.yS, borderCords.xE, borderCords.yE)
+
+    return borderCords
 }
 function onSetTxt(value) {
     setLineTxt(value)
@@ -87,11 +108,51 @@ function onDecreaseFontSize() {
     renderMeme()
 }
 function onAddLine() {
+    gId++
     addLine()
     renderMeme()
+}
+function onClick(ev) {
+    console.log(ev);
+    const pos = getEvPos(ev)
+    isBorderClicked(pos)
+}
+
+function getEvPos(ev) {
+    console.log(ev)
+
+    let pos = {
+        x: ev.offsetX,
+        y: ev.offsetY,
+    }
+
+    if (TOUCH_EVS.includes(ev.type)) {
+        // Prevent triggering the mouse ev
+        ev.preventDefault()
+        // Gets the first touch point
+        ev = ev.changedTouches[0]
+        // Calc the right pos according to the touch screen
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+        }
+    }
+    return pos
 }
 function _onEditorPage() {
     document.querySelector('.gallery').classList.add('hide')
     document.querySelector('.editor').classList.remove('hide')
 
+}
+//listener//
+function _addMouseListeners() {
+    gElCanvas.addEventListener('click', onClick)
+    // gElCanvas.addEventListener('mousedown', onDown)
+    // gElCanvas.addEventListener('mousemove', onMove)
+    // gElCanvas.addEventListener('mouseup', onUp)
+}
+function _addTouchListeners() {
+    //     gElCanvas.addEventListener('touchstart', onDown)
+    //     gElCanvas.addEventListener('touchmove', onMove)
+    //     gElCanvas.addEventListener('touchend', onUp)
 }

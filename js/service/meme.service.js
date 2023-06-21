@@ -32,6 +32,7 @@ var gMeme = {
         }
     ]
 }
+var gBorders = []
 
 
 function getMeme() {
@@ -80,4 +81,35 @@ function addLine() {
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1
     console.log(gMeme.selectedLineIdx)
+}
+function setBorder(pos) {
+    if (gBorders.length === 0) {
+        gBorders.push(pos)
+        return
+    }
+    var currBorderIdx = gBorders.findIndex(border => border.id === pos.id)
+    if (!currBorderIdx && currBorderIdx !== 0) {
+        gBorders.push(pos)
+        return
+    } else {
+        gBorders[currBorderIdx] = pos
+    }
+
+}
+function isBorderClicked(clickedPos) {
+    console.log(clickedPos)
+    console.log(gBorders)
+    for (var i = 0; i < gBorders.length; i++) {
+        const currBorder = gBorders[i]
+        if (currBorder.xS <= clickedPos.x && currBorder.xE >= clickedPos.x &&
+            currBorder.yS <= clickedPos.y && currBorder.yE >= clickedPos.y){
+                console.log('clicked');
+            }
+
+
+
+
+
+    }
+
 }

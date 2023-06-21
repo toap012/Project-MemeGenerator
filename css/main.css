@@ -4,6 +4,11 @@
 
 body{
     background-color: cadetblue;
+    /* color: rgba(255, 255, 255, 0.353); */
+}
+.canvas-container{
+    width: 500px;
+    height: 500px;
 }
 
 
