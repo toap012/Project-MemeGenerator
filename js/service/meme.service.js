@@ -27,7 +27,8 @@ var gMeme = {
         {
             txt: 'write somthing',
             size: 60,
-            color: 'red'
+            color: 'black',
+            hight: 100
         }
     ]
 }
@@ -41,11 +42,15 @@ function getMeme() {
 function getMemeLine() {
     return gMeme.lines[gMeme.selectedLineIdx]
 }
+function getMemeLines() {
+    return gMeme.lines
+}
+
 function getImgById(id) {
     return gImgs.find(img => img.id === id)
 }
 function setLineTxt(value) {
-    gMeme.lines[0].txt = value
+    gMeme.lines[gMeme.selectedLineIdx].txt = value
 }
 function setMemeImg(imgId) {
     gMeme.selectedImgId = imgId
@@ -65,4 +70,14 @@ function increaseFontSize() {
 }
 function decreaseFontSize() {
     gMeme.lines[gMeme.selectedLineIdx].size -= 10
+}
+function addLine() {
+    gMeme.lines.push({
+        txt: 'write somthing',
+        size: 60,
+        color: 'black',
+        hight: 200
+    })
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+    console.log(gMeme.selectedLineIdx)
 }

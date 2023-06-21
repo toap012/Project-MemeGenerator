@@ -36,12 +36,14 @@ function renderMeme() {
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
         // width: 400px , height: 427/640 * 400 = 266px
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText(getMemeLine().txt, gElCanvas.width / 2, 100)
+        const lines = getMemeLines()
+        lines.forEach(line => {
+            drawText(line, gElCanvas.width / 2)
+        })
     }
 }
 
-function drawText(text, x, y) {
-    const line = getMemeLine()
+function drawText(line, x) {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
@@ -49,8 +51,8 @@ function drawText(text, x, y) {
     gCtx.textAlign = 'center'
     gCtx.textBaseline = 'middle'
 
-    gCtx.fillText(text, x, y) // Draws (fills) a given text at the given (x, y) position.
-    gCtx.strokeText(text, x, y) // Draws (strokes) a given text at the given (x, y) position.
+    gCtx.fillText(line.txt, x, line.hight) // Draws (fills) a given text at the given (x, y) position.
+    gCtx.strokeText(line.txt, x, line.hight) // Draws (strokes) a given text at the given (x, y) position.
 }
 function onSetTxt(value) {
     setLineTxt(value)
@@ -76,12 +78,16 @@ function onSetTxtColor(value) {
     setTxtColor(value)
     renderMeme()
 }
-function onIncreaseFontSize(){
+function onIncreaseFontSize() {
     increaseFontSize()
     renderMeme()
 }
-function onDecreaseFontSize(){
+function onDecreaseFontSize() {
     decreaseFontSize()
+    renderMeme()
+}
+function onAddLine() {
+    addLine()
     renderMeme()
 }
 function _onEditorPage() {
