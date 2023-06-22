@@ -5,6 +5,7 @@ let gId = 1
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
+    renderGallery()
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
     console.log('hi');
@@ -53,7 +54,7 @@ function renderMeme() {
 }
 
 function drawText(line) {
-    console.log(line.pos)
+    // console.log(line.pos)
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
@@ -66,6 +67,9 @@ function drawText(line) {
 function onSetTxt(value) {
     setLineTxt(value, getLineWidth(value))
     renderMeme()
+}
+function onSaveMeme(){
+    saveMeme()
 }
 function drawBorder(line) {
     const lineWidth = getLineWidth(line.txt)
@@ -84,6 +88,7 @@ function onImgClick(elImg) {
 function onHomePage() {
     document.querySelector('.main-gallery-content').classList.remove('hide')
     document.querySelector('.editor').classList.add('hide')
+    document.querySelector('.main-saved-content').classList.add('hide')
 }
 function onDownloadMeme(elLink) {
     const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
@@ -150,8 +155,33 @@ function getEvPos(ev) {
     }
     return pos
 }
+
+function onFlexible(){
+    setRandomImg()
+    renderMeme()
+    resizeCanvas()
+}
+function onLineDelete(){
+    deleteLine(getMemeLine())
+    renderMeme()
+}
+function onSavedPage(){
+    document.querySelector('.main-saved-content').classList.remove('hide')
+    document.querySelector('.main-gallery-content').classList.add('hide')
+    document.querySelector('.editor').classList.add('hide')
+    renderSavedGallery()
+    
+}
+function onSavedImgClick(elImg){
+    const imgId = +elImg.dataset.id
+    uploadMeme(imgId)
+    _onEditorPage()
+    renderMeme()
+    resizeCanvas()
+}
 function _onEditorPage() {
     document.querySelector('.main-gallery-content').classList.add('hide')
+    document.querySelector('.main-saved-content').classList.add('hide')
     document.querySelector('.editor').classList.remove('hide')
 
 }

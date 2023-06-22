@@ -1,5 +1,5 @@
 'use strict'
-renderGallery()
+
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container')
     const imgUrls = getImgsToDisplay()

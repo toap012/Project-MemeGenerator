@@ -1,4 +1,5 @@
 'use strict'
+const LOCAL_STORAGE_KEY = 'memeDB'
 var gImgs = [
     { id: 1, url: 'img/meme-imgs (square)/1.jpg', keywords: ['funny', 'cat'] },
     { id: 2, url: 'img/meme-imgs (square)/2.jpg', keywords: ['funny', 'cat'] },
@@ -35,9 +36,22 @@ var gMeme = {
         }
     ]
 }
-var gBorders = []
+var gSavedMemes = []
 
-
+function getSavedImgsToDisplay(memes) {
+    const imgUrls = []
+    memes.forEach(meme =>
+        imgUrls.push(getImgById(meme.selectedImgId).url))
+    return imgUrls
+}
+function saveMeme() {
+    gSavedMemes.push(gMeme)
+    saveToLocalStorage(LOCAL_STORAGE_KEY, gSavedMemes)
+}
+function uploadMeme(idx) {
+    const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
+    gMeme = savedMemes[idx-1]
+}
 function getMeme() {
     const chosenImg = getImgById(gMeme.selectedImgId)
     const meme = { url: chosenImg.url, lines: gMeme.lines }
@@ -61,6 +75,12 @@ function setLineTxt(value, width) {
 }
 function setMemeImg(imgId) {
     gMeme.selectedImgId = imgId
+}
+function setRandomImg() {
+    gMeme.selectedImgId = getRandomInt(0, 19)
+}
+function deleteLine(line) {
+    gMeme.lines.splice(line, 1)
 }
 function getImgsToDisplay() {
     var urls = []
