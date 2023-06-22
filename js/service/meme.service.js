@@ -22,6 +22,7 @@ var gImgs = [
 
 ]
 var gMeme = {
+    id: makeId(3),
     selectedImgId: 1,
     selectedLineIdx: 0,
     lines: [
@@ -40,17 +41,40 @@ var gSavedMemes = []
 
 function getSavedImgsToDisplay(memes) {
     const imgUrls = []
+    console.log(memes)
     memes.forEach(meme =>
         imgUrls.push(getImgById(meme.selectedImgId).url))
     return imgUrls
 }
 function saveMeme() {
-    gSavedMemes.push(gMeme)
-    saveToLocalStorage(LOCAL_STORAGE_KEY, gSavedMemes)
+    console.log(gSavedMemes)
+    const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
+    console.log(savedMemes)
+    if (!savedMemes) {
+        gMeme.id = makeId(3)
+        gSavedMemes.push(gMeme)
+        saveToLocalStorage(LOCAL_STORAGE_KEY, gSavedMemes)
+        console.log(gSavedMemes)
+        return
+    }
+    const meme = savedMemes.find(savedMeme => savedMeme.id === gMeme.id)
+    console.log(meme)
+    if (!meme) {
+        gMeme.id = makeId(3)
+        gSavedMemes.push(gMeme)
+        saveToLocalStorage(LOCAL_STORAGE_KEY, gSavedMemes)
+        console.log(gSavedMemes)
+        return
+    }
+    const memeIdx = savedMemes.findIndex(savedMeme => savedMeme.id === meme.id)
+    savedMemes.splice(memeIdx, 1)
+    savedMemes.push(meme)
+
+    saveToLocalStorage(LOCAL_STORAGE_KEY, savedMemes)
 }
 function uploadMeme(idx) {
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
-    gMeme = savedMemes[idx-1]
+    gMeme = savedMemes[idx - 1]
 }
 function getMeme() {
     const chosenImg = getImgById(gMeme.selectedImgId)
