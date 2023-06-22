@@ -1,0 +1,20 @@
+@media (max-width: 640px) {
+    .main-gallery-content {
+        height: fit-content;
+
+    }
+
+    .gallery-container {
+        overflow: scroll;
+        overflow-x: hidden;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-item {
+        height: 100px;
+        border-radius: 10px;
+        margin-inline-end: 30px;
+        margin-block-end: 1.875rem;
+
+    }
+}

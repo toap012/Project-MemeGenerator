@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/connectors.css">
     <title>Tomer Appelman</title>
 </head>
@@ -12,7 +13,7 @@
 
     <header class="main-header">
         <nav class="main-nav-container">
-            <div class="logo" onclick="onHomePage()">Logo</div>
+            <div class="logo" onclick="onHomePage()">Meme-O-Torium</div>
             <ul class="nav-links-container clean-list">
                 <li> <a class="nav-link selected" href="#" onclick="onHomePage()">Gallery</a></li>
                 <li> <a class="nav-link" href="#" onclick="onSavedPage()">Saved</a></li>
@@ -54,22 +55,30 @@
 
                         <input class="type-input edit-item-item" type="text" name="txt" oninput="onSetTxt(value)">
                         <section class="rows-items-container edit-item-item">
-                            <button class="row-btn rows-item" onclick="onIncreaseFontSize()">size+</button>
-                            <button class="row-btn rows-item" onclick="onDecreaseFontSize()">size-</button>
-                            <button class="row-btn rows-item" onclick="onAddLine()">Add</button>
-                            <button class="row-btn rows-item" onclick="onSwitchLine()">Switch line</button>
-                            <button class="row-btn rows-item" onclick="onLineDelete()">delete</button>
-                            <button class="row-btn rows-item" onclick="onFlexible()">Flexible</button>
-                            <button class="row-btn rows-item" onclick="onSaveMeme()">Save</button>
+                            <button class="row-btn btn-switch-line rows-item" onclick="onSwitchLine()"
+                                title="switch line">⇅</button>
+                            <button class="row-btn btn-add rows-item" onclick="onAddLine()" title="add line">+</button>
+                            <button class="row-btn btn-delete rows-item" onclick="onLineDelete()"
+                                title="delet line">🗑</button>
+                            <button class="row-btn btn-flex rows-item" onclick="onFlexible()" title="random">🎲</button>
+                            <button class="row-btn btn-save rows-item" onclick="onSaveMeme()" title="save">💾</button>
                         </section>
                         <section class="text-items-container edit-item-item">
-                            <input class="text-btn text-item" type="color" name="txt-color"
+                            <button class="row-btn btn-size rows-item" onclick="onIncreaseFontSize()"
+                                title="font size">A+</button>
+                            <button class="row-btn btn-size rows-item" onclick="onDecreaseFontSize()"
+                                title="font size">A-</button>
+                            <input class="row-btn btn-color text-item" type="color" name="txt-color"
                                 oninput="onSetTxtColor(value)" title="Text color">
                         </section>
                         <section class="imogies-container edit-item-item"></section>
-                        <section class="links-contaienr edit-item-item">
-                            <a href="#" class="link-btn download-btn" onclick="onDownloadMeme(this)" download="my-meme.jpg">Download as
-                                jpeg</a>
+                        <section class="links-container edit-item-item">
+                            <a href="#" class="link-btn download-btn" onclick="onDownloadMeme(this)"
+                                download="my-meme.jpg">Download
+                            </a>
+                            <a href="#" class="link-btn share-btn" onclick="onDownloadMeme(this)"
+                                download="my-meme.jpg">Share
+                            </a>
                         </section>
                     </div>
                 </section>

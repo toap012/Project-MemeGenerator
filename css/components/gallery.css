@@ -5,12 +5,15 @@
     margin-left: 0.875rem;
     border-radius: 10px;
     height: 566px;
+    overflow: scroll;
+    overflow-x: hidden;
 
 }
 
 .gallery {
     display: grid;
     grid-template-columns: 1fr;
+    width: 100vw;
     padding: 1.5625rem 0.625rem 1.5625rem 0.625rem;
 
     gap: 45px;
@@ -19,11 +22,11 @@
 
 
 .gallery-container {
-    overflow: scroll;
-    overflow-x: hidden;
-    column-count: 5;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* column-count: 5;
     column-width: 200px;
-    column-gap: 1.872rem;
+    column-gap: 1.872rem; */
     /* gap: 1.875rem; */
     /* justify-content: space-around; */
     /* margin-inline-start: 3.5625rem;
@@ -40,21 +43,21 @@
     border-radius: 10px;
     margin-inline-end: 30px;
     margin-block-end: 1.875rem;
-
+    cursor: pointer;
 }
 
 /* width */
-.gallery-container::-webkit-scrollbar {
+.main-gallery-content::-webkit-scrollbar {
     width: 13px;
 }
 
 /* Track */
-.gallery-container::-webkit-scrollbar-track {
+.main-gallery-content::-webkit-scrollbar-track {
     background-color: #22252c;
 }
 
 /* Handle */
-.gallery-container::-webkit-scrollbar-thumb {
+.main-gallery-content::-webkit-scrollbar-thumb {
     /* background: #22252c; */
     width: 20px;
     height: 57px;
@@ -63,6 +66,6 @@
 }
 
 /* Handle on hover */
-.gallery-container::-webkit-scrollbar-thumb:hover {
+.main-gallery-content::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
