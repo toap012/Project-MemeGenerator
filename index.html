@@ -14,36 +14,60 @@
         <nav class="main-nav-container">
             <div class="logo" onclick="onHomePage()">Logo</div>
             <ul class="nav-links-container clean-list">
-                <li> <a class="nav-link" href="#" onclick="onHomePage()">Gallery</a></li>
+                <li> <a class="nav-link selected" href="#" onclick="onHomePage()">Gallery</a></li>
                 <li> <a class="nav-link" href="#">About</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="main-content">
-
+        <div class="main-gallery-content">
             <section class="gallery">
+                <section class="gallery-filter">
+                    <div class="gallery-txt-input">
+                        <input class="txt-input" type="text" name="gallery-txt-input" id="" placeholder="Search">
+                        <img class="search-btn" src="img/css/Forme_9.png" alt="serch btn">
+                    </div>
+                    <div class="filter-by-type">
+                        <ul class="filter-types-container clean-list">
+                            <li class="filter-type-item">funny</li>
+                            <li class="filter-type-item">dumb</li>
+                            <li class="filter-type-item">baby</li>
+                        </ul>
+                    </div>
+                    <button>btn</button>
+                </section>
                 <section class="gallery-container">
                 </section>
             </section>
+        </div>
 
+        <div class="main-editor-content ">
 
             <section class="editor hide">
                 <section class="editor-container">
-                    <div class="canvas-container">
+                    <div class="edit-item canvas-container">
                         <canvas id="my-canvas" height="450" width="450"></canvas>
                     </div>
-                    <div class="edits-container">
+                    <div class="edit-item edits-container">
 
-                        <input type="text" name="txt" oninput="onSetTxt(value)">
-                        <a href="#" class="btn" onclick="onDownloadMeme(this)" download="my-meme.jpg">Download as
-                            jpeg</a>
-                        <input type="color" name="txt-color" oninput="onSetTxtColor(value)" title="Text color">
-                        <button onclick="onIncreaseFontSize()">size+</button>
-                        <button onclick="onDecreaseFontSize()">size-</button>
-                        <button onclick="onAddLine()">Add</button>
-                        <button onclick="onSwitchLine()">Switch line</button>
+                        <input class="type-input edit-item-item" type="text" name="txt" oninput="onSetTxt(value)">
+                        <section class="rows-items-container edit-item-item">
+                            <button class="row-btn rows-item" onclick="onIncreaseFontSize()">size+</button>
+                            <button class="row-btn rows-item" onclick="onDecreaseFontSize()">size-</button>
+                            <button class="row-btn rows-item" onclick="onAddLine()">Add</button>
+                            <button class="row-btn rows-item" onclick="onSwitchLine()">Switch line</button>
+                            <button class="row-btn rows-item" onclick="">delete</button>
+                        </section>
+                        <section class="text-items-container edit-item-item">
+                            <input class="text-btn text-item" type="color" name="txt-color"
+                                oninput="onSetTxtColor(value)" title="Text color">
+                        </section>
+                        <section class="imogies-container edit-item-item"></section>
+                        <section class="links-contaienr edit-item-item">
+                            <a href="#" class="link-btn download-btn" onclick="onDownloadMeme(this)" download="my-meme.jpg">Download as
+                                jpeg</a>
+                        </section>
                     </div>
                 </section>
             </section>

@@ -44,14 +44,16 @@ function renderMeme() {
         lines.forEach(line => {
             // setPos(idx, getLinePos(line.txt))
             drawText(line)
-            // console.log(line)
         })
         const line = getMemeLine()
+        document.querySelector('.type-input').value = line.txt
+        // console.log(line)
         drawBorder(line)
     }
 }
 
 function drawText(line) {
+    console.log(line.pos)
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
@@ -62,13 +64,13 @@ function drawText(line) {
 
 }
 function onSetTxt(value) {
-    setLineTxt(value)
+    setLineTxt(value, getLineWidth(value))
     renderMeme()
 }
 function drawBorder(line) {
     const lineWidth = getLineWidth(line.txt)
     gCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
-    gCtx.strokeRect(line.pos.x, line.pos.y-50, lineWidth, line.size)
+    gCtx.strokeRect(line.pos.x, line.pos.y - line.size, lineWidth, line.size)
 
 }
 function onImgClick(elImg) {
@@ -80,7 +82,7 @@ function onImgClick(elImg) {
 }
 
 function onHomePage() {
-    document.querySelector('.gallery').classList.remove('hide')
+    document.querySelector('.main-gallery-content').classList.remove('hide')
     document.querySelector('.editor').classList.add('hide')
 }
 function onDownloadMeme(elLink) {
@@ -105,6 +107,8 @@ function onAddLine() {
 }
 function getLineWidth(txt) {
     let textMetrics = gCtx.measureText(txt)
+    // let textMetrics1 = gCtx.measureText('write somthing')
+    // console.log(textMetrics1.width)
     return textMetrics.width
 
 }
@@ -147,7 +151,7 @@ function getEvPos(ev) {
     return pos
 }
 function _onEditorPage() {
-    document.querySelector('.gallery').classList.add('hide')
+    document.querySelector('.main-gallery-content').classList.add('hide')
     document.querySelector('.editor').classList.remove('hide')
 
 }

@@ -5,6 +5,7 @@
 body {
     background-color: #22252c;
     /* color: rgba(255, 255, 255, 0.353); */
+    overflow: hidden;
 }
 
 
@@ -64,4 +65,19 @@ body {
     color: #fff;
     font-size: 1.3125rem;
     font-weight: 500;
+}
+.selected {
+    width: 116px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #fefefe;
+    color: #21ac91;
+    font-size: 1.3125rem;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }

@@ -19,4 +19,5 @@
     margin-inline-end: 15.4375rem;
     display: flex;
     gap: 3.9375rem;
+    align-items: center;
 }

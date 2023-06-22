@@ -7,9 +7,36 @@
 }
 
 .canvas-container {
-    /* width: 476px;
-    height: 546px; */
-    width: 500px;
-    height: 500px;
-    border-radius: 10px;
+    /* nothing? */
+}
+
+.edit-item {
+    width: 32.8125rem;
+    height: 546px;
+    /* box-shadow: 1px 5px 0 #3d3d3d, inset 0 5px 0 #3d3d3d; */
+    border-radius: 30px;
+    background-color: #3d3d3d74;
+
+}
+
+.edits-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.type-input {
+    width: 27.8125rem;
+    height: 57px;
+    box-shadow: 1px 5px 0 #bbc4d1, inset 0 5px 0 #ffffff;
+    border-radius: 28px;
+    background-color: #ebeef3;
+    justify-self: center;
+    text-align: center;
+    color: #3d3d3d;
+    font-size: 1.5625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    
 }
