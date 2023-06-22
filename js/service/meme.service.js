@@ -28,8 +28,10 @@ var gMeme = {
             txt: 'write somthing',
             size: 60,
             color: 'black',
-            pos: { x: 250, y: 100 },
-            isSelected: false
+            isSelected: false,
+            id: makeId(2),
+            pos: { x: 80, y: 80 }
+            // width: 0
         }
     ]
 }
@@ -47,7 +49,9 @@ function getMemeLine() {
 function getMemeLines() {
     return gMeme.lines
 }
-
+function setPos(idx, pos) {
+    gMeme.lines[idx].pos = pos
+}
 function getImgById(id) {
     return gImgs.find(img => img.id === id)
 }
@@ -78,8 +82,8 @@ function addLine() {
         txt: 'write somthing',
         size: 60,
         color: 'black',
-        pos: { x: 250, y: 200 },
-        isSelected: false
+        isSelected: false,
+        id: makeId(2)
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1
     console.log(gMeme.selectedLineIdx)
@@ -88,51 +92,54 @@ function switchLine() {
     gMeme.selectedLineIdx++
     if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
 }
-function setBorder(pos) {
-    if (gBorders.length === 0) {
-        gBorders.push(pos)
-        return
-    }
-    var currBorderIdx = gBorders.findIndex(border => border.id === pos.id)
-    if (!currBorderIdx && currBorderIdx !== 0) {
-        gBorders.push(pos)
-        return
-    } else {
-        gBorders[currBorderIdx] = pos
-    }
 
+
+// function setBorder(pos) {
+//     if (gBorders.length === 0) {
+//         gBorders.push(pos)
+//         return
+//     }
+//     var currBorderIdx = gBorders.findIndex(border => border.id === pos.id)
+//     if (!currBorderIdx && currBorderIdx !== 0) {
+//         gBorders.push(pos)
+//         return
+//     } else {
+//         gBorders[currBorderIdx] = pos
+//     }
+
+// }
+function getLineById(lineId) {
+    return lineId.find(line => line.id === lineId)
 }
 function isLineClicked(clickedPos) {
     console.log(clickedPos)
-    for (var i = 0; i < gMeme.lines.length; i++) {
-        const currLine = gMeme.lines[i]
-        const { pos, size } = currLine
-        console.log(pos)
-        if (pos.x - size * 4 <= clickedPos.x && pos.x + size * 4 >= clickedPos.x &&
-            pos.y - size - 20 <= clickedPos.y && pos.y + size - 20 >= clickedPos.y) {
-            console.log('clicked')
-            gMeme.selectedLineIdx = i
-            return true
-        }
-
-    }
-    return false
+    var line = gMeme.lines.find(line => {
+        // console.log(line.pos)
+        clickedPos.x <= line.pos.xE + 367 && clickedPos.x >= line.pos.xS - 160 &&
+            clickedPos.y <= line.pos.yE && clickedPos.y >= line.pos.yS - 20
+    });
+    console.log(line)
+    if (line === undefined) return false
+    console.log('clicked')
+    const lineId = getLineById(line.id)
+    gMeme.selectedLineIdx = gMeme.lines.findIndex(line => line.id === lineId)
+    return true
 }
 
-function isBorderClicked(clickedPos) {
-    console.log(clickedPos)
-    console.log(gBorders)
-    for (var i = 0; i < gBorders.length; i++) {
-        const currBorder = gBorders[i]
-        if (currBorder.xS <= clickedPos.x && currBorder.xE >= clickedPos.x &&
-            currBorder.yS <= clickedPos.y && currBorder.yE >= clickedPos.y) {
-            console.log('clicked');
-        }
+// function isBorderClicked(clickedPos) {
+//     console.log(clickedPos)
+//     console.log(gBorders)
+//     for (var i = 0; i < gBorders.length; i++) {
+//         const currBorder = gBorders[i]
+//         if (currBorder.xS <= clickedPos.x && currBorder.xE >= clickedPos.x &&
+//             currBorder.yS <= clickedPos.y && currBorder.yE >= clickedPos.y) {
+//             console.log('clicked');
+//         }
 
 
 
 
 
-    }
+//     }
 
-}
+// }

@@ -42,10 +42,11 @@ function renderMeme() {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         const lines = getMemeLines()
         lines.forEach(line => {
+            // setPos(idx, getLinePos(line.txt))
             drawText(line)
+            // console.log(line)
         })
         const line = getMemeLine()
-        console.log(line)
         drawBorder(line)
     }
 }
@@ -55,31 +56,20 @@ function drawText(line) {
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
     gCtx.font = `${line.size}px Arial`
-    gCtx.textAlign = 'center'
-    gCtx.textBaseline = 'middle'
 
     gCtx.fillText(line.txt, line.pos.x, line.pos.y) // Draws (fills) a given text at the given (x, y) position.
-    gCtx.strokeText(line.txt, line.pos.x, line.pos.y) // Draws (strokes) a given text at the given (x, y) position.
+    // gCtx.strokeText(line.txt, line.pos.xE, line.pos.yE) // Draws (strokes) a given text at the given (x, y) position.
 
-    // console.log(gCtx)
-    // setBorder(newBordersCords)
-}
-function drawBorder(line) {
-    // console.log(size)
-    // console.log(hight)
-    const borderCords = { xS: 0, yS: 0, xE: 0, yE: 0, id: gId }
-    borderCords.xS = line.pos.x / 2 - line.size * 3.5 + 60 * 3.5
-    borderCords.yS = line.pos.y + 10 - line.size
-    borderCords.xE = line.pos.x + line.size * 8 - 60 * 8
-    borderCords.yE = line.size * 2 - 20
-    gCtx.strokeStyle = 'rgba(255, 255, 255, 0.353)'
-    gCtx.strokeRect(borderCords.xS, borderCords.yS, borderCords.xE, borderCords.yE)
-
-    return borderCords
 }
 function onSetTxt(value) {
     setLineTxt(value)
     renderMeme()
+}
+function drawBorder(line) {
+    const lineWidth = getLineWidth(line.txt)
+    gCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
+    gCtx.strokeRect(line.pos.x, line.pos.y-50, lineWidth, line.size)
+
 }
 function onImgClick(elImg) {
     const imgId = +elImg.dataset.id
@@ -110,9 +100,13 @@ function onDecreaseFontSize() {
     renderMeme()
 }
 function onAddLine() {
-    gId++
     addLine()
     renderMeme()
+}
+function getLineWidth(txt) {
+    let textMetrics = gCtx.measureText(txt)
+    return textMetrics.width
+
 }
 function onSwitchLine() {
     switchLine()
@@ -123,8 +117,9 @@ function onClick(ev) {
     const pos = getEvPos(ev)
     if (!isLineClicked(pos)) return
     renderMeme()
-    
+
 }
+
 function onDown(ev) {
     const pos = getEvPos(ev)
 
