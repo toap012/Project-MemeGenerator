@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/connectors.css">
     <title>Tomer Appelman</title>
 </head>
 
@@ -13,35 +13,42 @@
     <header class="main-header">
         <nav class="main-nav-container">
             <div class="logo" onclick="onHomePage()">Logo</div>
-            <ul class="nav-links-container">
-                <li class="nav-link"> <a href="#" onclick="onHomePage()">Gallery</a></li>
-                <li class="nav-link"> <a href="#">About</a></li>
+            <ul class="nav-links-container clean-list">
+                <li> <a class="nav-link" href="#" onclick="onHomePage()">Gallery</a></li>
+                <li> <a class="nav-link" href="#">About</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="main-contant">
+    <main>
+        <div class="main-content">
 
-        <section class="gallery">
-            <section class="gallery-container">
+            <section class="gallery">
+                <section class="gallery-container">
+                </section>
             </section>
-        </section>
 
 
-        <section class="editor hide">
+            <section class="editor hide">
+                <section class="editor-container">
+                    <div class="canvas-container">
+                        <canvas id="my-canvas" height="450" width="450"></canvas>
+                    </div>
+                    <div class="edits-container">
 
-            <input type="text" name="txt" oninput="onSetTxt(value)">
-            <a href="#" class="btn" onclick="onDownloadMeme(this)" download="my-meme.jpg">Download as jpeg</a>
-            <input type="color" name="txt-color" oninput="onSetTxtColor(value)" title="Text color">
-            <button onclick="onIncreaseFontSize()">size+</button>
-            <button onclick="onDecreaseFontSize()">size-</button>
-            <button onclick="onAddLine()">Add</button>
-            <button onclick="onSwitchLine()">Switch line</button>
-            <div class="canvas-container">
-                <canvas id="my-canvas" height="450" width="450"></canvas>
-            </div>
-        </section>
+                        <input type="text" name="txt" oninput="onSetTxt(value)">
+                        <a href="#" class="btn" onclick="onDownloadMeme(this)" download="my-meme.jpg">Download as
+                            jpeg</a>
+                        <input type="color" name="txt-color" oninput="onSetTxtColor(value)" title="Text color">
+                        <button onclick="onIncreaseFontSize()">size+</button>
+                        <button onclick="onDecreaseFontSize()">size-</button>
+                        <button onclick="onAddLine()">Add</button>
+                        <button onclick="onSwitchLine()">Switch line</button>
+                    </div>
+                </section>
+            </section>
 
+        </div>
     </main>
 
     <script src="js/service/meme.service.js"></script>

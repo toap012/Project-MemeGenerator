@@ -1,0 +1,18 @@
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.875rem;
+    /* justify-content: space-around; */
+    margin-inline-start: 3.5625rem;
+    margin-inline-end: 4.1875rem;
+    /* margin-top: 3.0625rem; */
+    
+
+
+}
+
+.gallery-item {
+    width: 200px;
+    height: 173px;
+    border-radius: 10px;
+}

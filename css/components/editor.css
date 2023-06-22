@@ -1,0 +1,13 @@
+.editor-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5.625rem;
+
+    margin: 1.3125rem 5.75rem 1.8125rem 6.0625rem;
+}
+
+.canvas-container {
+    width: 476px;
+    height: 546px;
+    border-radius: 10px;
+}

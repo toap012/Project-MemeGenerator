@@ -1,0 +1,22 @@
+.main-nav-container {
+    display: flex;
+    border-radius: 37px;
+    margin: 0.9375rem 1rem 1rem 0.4375rem;
+    height: 73px;
+
+
+    background-color: #5970c1;
+    background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+    color: #fff;
+
+
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.nav-links-container {
+    margin-inline-end: 15.4375rem;
+    display: flex;
+    gap: 3.9375rem;
+}
