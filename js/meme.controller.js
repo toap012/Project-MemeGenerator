@@ -2,6 +2,7 @@
 let gElCanvas
 let gCtx
 let gId = 1
+let gIsBorders = true
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
@@ -42,18 +43,28 @@ function renderMeme() {
         // width: 400px , height: 427/640 * 400 = 266px
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         const lines = getMemeLines()
+        // console.log(lines)
+        // if(!lines.length)drawText()
         lines.forEach(line => {
             // setPos(idx, getLinePos(line.txt))
-            drawText(line)
+                drawText(line)
         })
         const line = getMemeLine()
+        if (!line) return
         document.querySelector('.type-input').value = line.txt
         // console.log(line)
+        if (!gIsBorders) return
         drawBorder(line)
     }
 }
 
-function drawText(line) {
+function drawText(line = {
+    txt: 'write somthing',
+    size: 60,
+    color: 'white',
+    align: 'start',
+    pos: { x: 80, y: 80 }
+}) {
     // console.log(line.pos)
     gCtx.lineWidth = 2
     // gCtx.strokeStyle = 'white'
@@ -91,6 +102,7 @@ function onHomePage() {
     document.querySelector('.main-saved-content').classList.add('hide')
 }
 function onDownloadMeme(elLink) {
+    _renderMemeWithNoBorders()
     const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
     elLink.href = memeContent
 }
@@ -105,6 +117,11 @@ function onIncreaseFontSize() {
 function onDecreaseFontSize() {
     decreaseFontSize()
     renderMeme()
+}
+function onSearch(value) {
+    console.log('filtering')
+    setFilterByKeyWords(value)
+    renderGallery()
 }
 function onAddLine() {
     addLine()
@@ -239,6 +256,11 @@ function doUploadImg(imgDataUrl, onSuccess) {
     }
     XHR.open('POST', '//ca-upload.com/here/upload.php')
     XHR.send(formData)
+}
+function _renderMemeWithNoBorders() {
+    gIsBorders = false
+    renderMeme()
+    gIsBorders = true
 }
 function _onEditorPage() {
     document.querySelector('.main-gallery-content').classList.add('hide')

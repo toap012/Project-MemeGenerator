@@ -3,6 +3,7 @@
 function renderGallery() {
     const elGallery = document.querySelector('.gallery-container')
     const imgUrls = getImgsToDisplay()
+    if (!imgUrls) return
     const strHTMLS = []
     var id = 1
     imgUrls.map(imgUrl => {
