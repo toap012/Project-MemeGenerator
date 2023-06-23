@@ -53,7 +53,7 @@
                     </div>
                     <div class="edit-item edits-container">
 
-                        <input class="type-input edit-item-item" type="text" name="txt" oninput="onSetTxt(value)">
+                        <input class="type-input edit-item-item" type="text" name="txt" oninput="onSetTxt(value)" >
                         <section class="rows-items-container edit-item-item">
                             <button class="row-btn btn-switch-line rows-item" onclick="onSwitchLine()"
                                 title="switch line">⇅</button>
@@ -64,9 +64,9 @@
                             <button class="row-btn btn-save rows-item" onclick="onSaveMeme()" title="save">💾</button>
                         </section>
                         <section class="text-items-container edit-item-item">
-                            <button class="row-btn btn-align rows-item"><img src="img/css/align left.png" alt="align left"></button>
-                            <button class="row-btn btn-align rows-item"><img src="img/css/align center.png" alt="align center"></button>
-                            <button class="row-btn btn-align rows-item"><img src="img/css/align right.png" alt="align right"></button>
+                            <button class="row-btn btn-align rows-item"><img src="img/css/align left.png" alt="align left" data-id="left" onclick="onAlignTxt(this)"></button>
+                            <button class="row-btn btn-align rows-item"><img src="img/css/align center.png" alt="align center" data-id="center" onclick="onAlignTxt(this)"></button>
+                            <button class="row-btn btn-align rows-item"><img src="img/css/align right.png" alt="align right" data-id="right" onclick="onAlignTxt(this)"></button>
                             <button class="row-btn btn-size rows-item" onclick="onIncreaseFontSize()"
                             title="font size">A+</button>
                             <button class="row-btn btn-size rows-item" onclick="onDecreaseFontSize()"
@@ -81,7 +81,7 @@
                             <a href="#" class="link-btn download-btn" onclick="onDownloadMeme(this)"
                                 download="my-meme.jpg">Download
                             </a>
-                            <a href="#" class="link-btn share-btn" onclick="onDownloadMeme(this)"
+                            <a href="#" class="link-btn share-btn" onclick="onShareImg()"
                                 download="my-meme.jpg">Share
                             </a>
                         </section>

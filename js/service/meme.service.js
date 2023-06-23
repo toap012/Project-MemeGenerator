@@ -29,7 +29,8 @@ var gMeme = {
         {
             txt: 'write somthing',
             size: 60,
-            color: 'black',
+            color: 'white',
+            align: 'start',
             isSelected: false,
             id: makeId(2),
             pos: { x: 80, y: 80 },
@@ -71,6 +72,9 @@ function saveMeme() {
     savedMemes.push(meme)
 
     saveToLocalStorage(LOCAL_STORAGE_KEY, savedMemes)
+}
+function alignTxt(direction) {
+    gMeme.lines[gMeme.selectedLineIdx].align = direction
 }
 function uploadMeme(idx) {
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
@@ -126,10 +130,11 @@ function addLine() {
     gMeme.lines.push({
         txt: 'write somthing',
         size: 60,
-        color: 'black',
+        color: 'white',
+        align: 'start',
         isSelected: false,
         id: makeId(2),
-        pos: { x: 80, y: 450 },
+        pos: { x: 80, y: 450 }, 
         width: 386.806640625
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1

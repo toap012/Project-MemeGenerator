@@ -56,10 +56,10 @@ function renderMeme() {
 function drawText(line) {
     // console.log(line.pos)
     gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'black'
+    // gCtx.strokeStyle = 'white'
     gCtx.fillStyle = line.color
     gCtx.font = `${line.size}px Arial`
-
+    gCtx.textAlign = line.align
     gCtx.fillText(line.txt, line.pos.x, line.pos.y) // Draws (fills) a given text at the given (x, y) position.
     // gCtx.strokeText(line.txt, line.pos.xE, line.pos.yE) // Draws (strokes) a given text at the given (x, y) position.
 
@@ -68,7 +68,7 @@ function onSetTxt(value) {
     setLineTxt(value, getLineWidth(value))
     renderMeme()
 }
-function onSaveMeme(){
+function onSaveMeme() {
     saveMeme()
 }
 function drawBorder(line) {
@@ -156,33 +156,95 @@ function getEvPos(ev) {
     return pos
 }
 
-function onFlexible(){
+function onFlexible() {
     setRandomImg()
     renderMeme()
     resizeCanvas()
 }
-function onLineDelete(){
+function onLineDelete() {
     deleteLine(getMemeLine())
     renderMeme()
 }
-function onSavedPage(){
+
+function onAlignTxt(elBtn) {
+    const direction = elBtn.dataset.id
+    console.log(direction)
+    switch (direction) {
+        case 'left':
+            alignTxt('end')
+            break
+        case 'center':
+            alignTxt('start')
+            break
+        case 'right':
+            alignTxt('center')
+            break
+    }
+    renderMeme()
+}
+function onSavedPage() {
     document.querySelector('.main-saved-content').classList.remove('hide')
     document.querySelector('.main-gallery-content').classList.add('hide')
     document.querySelector('.editor').classList.add('hide')
     renderSavedGallery()
-    
+
 }
-function onSavedImgClick(elImg){
+function onSavedImgClick(elImg) {
     const imgId = +elImg.dataset.id
     uploadMeme(imgId)
     _onEditorPage()
     renderMeme()
     resizeCanvas()
 }
+function onShareImg() {
+    // Gets the image from the canvas
+    const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
+
+    function onSuccess(uploadedImgUrl) {
+        // Handle some special characters
+        const url = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${url}`)
+    }
+
+    // Send the image to the server
+    doUploadImg(imgDataUrl, onSuccess)
+}
+function doUploadImg(imgDataUrl, onSuccess) {
+    // Upload the image to a server, get back a URL 
+    // call the function onSuccess when done
+
+
+    // Pack the image for delivery
+    const formData = new FormData()
+    formData.append('img', imgDataUrl)
+
+    // Send a post req with the image to the server
+    const XHR = new XMLHttpRequest()
+    XHR.onreadystatechange = () => {
+        // If the request is not done, we have no business here yet, so return
+        if (XHR.readyState !== XMLHttpRequest.DONE) return
+        // if the response is not ok, show an error
+        if (XHR.status !== 200) return console.error('Error uploading image')
+        const { responseText: url } = XHR
+        // Same as
+        // const url = XHR.responseText
+
+        // If the response is ok, call the onSuccess callback function, 
+        // that will create the link to facebook using the url we got
+        console.log('Got back live url:', url)
+        onSuccess(url)
+    }
+    XHR.onerror = (req, ev) => {
+        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
+    }
+    XHR.open('POST', '//ca-upload.com/here/upload.php')
+    XHR.send(formData)
+}
 function _onEditorPage() {
     document.querySelector('.main-gallery-content').classList.add('hide')
     document.querySelector('.main-saved-content').classList.add('hide')
     document.querySelector('.editor').classList.remove('hide')
+    document.querySelector('.type-input').focus()
 
 }
 //listener//
