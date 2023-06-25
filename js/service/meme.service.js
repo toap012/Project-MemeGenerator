@@ -1,4 +1,6 @@
 'use strict'
+
+//global variables//
 const LOCAL_STORAGE_KEY = 'memeDB'
 var gImgs = [
     { id: 1, url: 'img/meme-imgs (square)/1.jpg', keywords: ['trump', 'celebrity'] },
@@ -43,6 +45,8 @@ var gFilterBy = {
     keywords: ''
 }
 
+
+//return functions//
 function getSavedImgsToDisplay(memes) {
     const imgUrls = []
     console.log(memes)
@@ -50,6 +54,46 @@ function getSavedImgsToDisplay(memes) {
         imgUrls.push(getImgById(meme.selectedImgId).url))
     return imgUrls
 }
+function getMeme() {
+    const chosenImg = getImgById(gMeme.selectedImgId)
+    const meme = { url: chosenImg.url, lines: gMeme.lines }
+    return meme
+}
+function getImgsToDisplay() {
+    var urls = []
+    var imgs = []
+    if (gFilterBy.keywords) {
+        gImgs.forEach(img => {
+            const isImgFiltered = img.keywords.some(keyword => gFilterBy.keywords.includes(keyword))
+            if (isImgFiltered) {
+                imgs.push(img)
+            }
+        })
+    } else {
+        imgs = gImgs
+    }
+
+    if (!imgs) return false
+    imgs.forEach(img => {
+        urls.push(img.url)
+    })
+    return urls
+}
+function getMemeLine() {
+    return gMeme.lines[gMeme.selectedLineIdx]
+}
+function getMemeLines() {
+    return gMeme.lines
+}
+function getImgById(id) {
+    return gImgs.find(img => img.id === id)
+}
+function getLineById(lineId) {
+    return gMeme.lines.find(line => line.id === lineId)
+}
+
+
+//dom update functions//
 function saveMeme() {
     console.log(gSavedMemes)
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
@@ -83,23 +127,6 @@ function uploadMeme(idx) {
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
     gMeme = savedMemes[idx - 1]
 }
-function getMeme() {
-    const chosenImg = getImgById(gMeme.selectedImgId)
-    const meme = { url: chosenImg.url, lines: gMeme.lines }
-    return meme
-}
-function getMemeLine() {
-    return gMeme.lines[gMeme.selectedLineIdx]
-}
-function getMemeLines() {
-    return gMeme.lines
-}
-// function setPos(idx, pos) {
-//     gMeme.lines[idx].pos = pos
-// }
-function getImgById(id) {
-    return gImgs.find(img => img.id === id)
-}
 function setLineTxt(value, width) {
     gMeme.lines[gMeme.selectedLineIdx].txt = value
     gMeme.lines[gMeme.selectedLineIdx].width = width
@@ -115,26 +142,6 @@ function deleteLine(line) {
 }
 function setFilterByKeyWords(value) {
     gFilterBy.keywords = value
-}
-function getImgsToDisplay() {
-    var urls = []
-    var imgs = []
-    if (gFilterBy.keywords) {
-        gImgs.forEach(img => {
-            const isImgFiltered = img.keywords.some(keyword => gFilterBy.keywords.includes(keyword))
-            if (isImgFiltered) {
-                imgs.push(img)
-            }
-        })
-    } else {
-        imgs = gImgs
-    }
-
-    if (!imgs) return false
-    imgs.forEach(img => {
-        urls.push(img.url)
-    })
-    return urls
 }
 function setTxtColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
@@ -164,9 +171,8 @@ function switchLine() {
     if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
 }
 
-function getLineById(lineId) {
-    return gMeme.lines.find(line => line.id === lineId)
-}
+
+//validate functions//
 function isLineClicked(clickedPos) {
     console.log(clickedPos)
     var line = gMeme.lines.find(line =>
@@ -174,7 +180,7 @@ function isLineClicked(clickedPos) {
         clickedPos.x <= line.pos.x + line.width && clickedPos.x >= line.pos.x &&
         clickedPos.y <= line.pos.y && clickedPos.y >= line.pos.y - line.size
     );
-    console.log(line)
+    // console.log(line)
     if (line === undefined) return false
     console.log('clicked')
     const currLine = getLineById(line.id)

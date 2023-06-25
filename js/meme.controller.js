@@ -47,7 +47,7 @@ function renderMeme() {
         // if(!lines.length)drawText()
         lines.forEach(line => {
             // setPos(idx, getLinePos(line.txt))
-                drawText(line)
+            drawText(line)
         })
         const line = getMemeLine()
         if (!line) return
@@ -57,7 +57,6 @@ function renderMeme() {
         drawBorder(line)
     }
 }
-
 function drawText(line = {
     txt: 'write somthing',
     size: 60,
@@ -75,18 +74,58 @@ function drawText(line = {
     // gCtx.strokeText(line.txt, line.pos.xE, line.pos.yE) // Draws (strokes) a given text at the given (x, y) position.
 
 }
+function drawBorder(line) {
+    const lineWidth = getLineWidth(line.txt)
+    gCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
+    gCtx.strokeRect(line.pos.x, line.pos.y - line.size, lineWidth, line.size)
+
+}
+function doUploadImg(imgDataUrl, onSuccess) {
+    // Upload the image to a server, get back a URL 
+    // call the function onSuccess when done
+
+
+    // Pack the image for delivery
+    const formData = new FormData()
+    formData.append('img', imgDataUrl)
+
+    // Send a post req with the image to the server
+    const XHR = new XMLHttpRequest()
+    XHR.onreadystatechange = () => {
+        // If the request is not done, we have no business here yet, so return
+        if (XHR.readyState !== XMLHttpRequest.DONE) return
+        // if the response is not ok, show an error
+        if (XHR.status !== 200) return console.error('Error uploading image')
+        const { responseText: url } = XHR
+        // Same as
+        // const url = XHR.responseText
+
+        // If the response is ok, call the onSuccess callback function, 
+        // that will create the link to facebook using the url we got
+        console.log('Got back live url:', url)
+        onSuccess(url)
+    }
+    XHR.onerror = (req, ev) => {
+        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
+    }
+    XHR.open('POST', '//ca-upload.com/here/upload.php')
+    XHR.send(formData)
+}
+function getLineWidth(txt) {
+    let textMetrics = gCtx.measureText(txt)
+    // let textMetrics1 = gCtx.measureText('write somthing')
+    // console.log(textMetrics1.width)
+    return textMetrics.width
+
+}
+
+//onClick functions//
 function onSetTxt(value) {
     setLineTxt(value, getLineWidth(value))
     renderMeme()
 }
 function onSaveMeme() {
     saveMeme()
-}
-function drawBorder(line) {
-    const lineWidth = getLineWidth(line.txt)
-    gCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)'
-    gCtx.strokeRect(line.pos.x, line.pos.y - line.size, lineWidth, line.size)
-
 }
 function onImgClick(elImg) {
     const imgId = +elImg.dataset.id
@@ -95,7 +134,6 @@ function onImgClick(elImg) {
     _onEditorPage()
     resizeCanvas()
 }
-
 function onHomePage() {
     document.querySelector('.main-gallery-content').classList.remove('hide')
     document.querySelector('.editor').classList.add('hide')
@@ -127,52 +165,11 @@ function onAddLine() {
     addLine()
     renderMeme()
 }
-function getLineWidth(txt) {
-    let textMetrics = gCtx.measureText(txt)
-    // let textMetrics1 = gCtx.measureText('write somthing')
-    // console.log(textMetrics1.width)
-    return textMetrics.width
-
-}
 function onSwitchLine() {
     switchLine()
     renderMeme()
 
 }
-function onClick(ev) {
-    const pos = getEvPos(ev)
-    if (!isLineClicked(pos)) return
-    renderMeme()
-
-}
-
-function onDown(ev) {
-    const pos = getEvPos(ev)
-
-}
-
-function getEvPos(ev) {
-    // console.log(ev)
-
-    let pos = {
-        x: ev.offsetX,
-        y: ev.offsetY,
-    }
-
-    if (TOUCH_EVS.includes(ev.type)) {
-        // Prevent triggering the mouse ev
-        ev.preventDefault()
-        // Gets the first touch point
-        ev = ev.changedTouches[0]
-        // Calc the right pos according to the touch screen
-        pos = {
-            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
-        }
-    }
-    return pos
-}
-
 function onFlexible() {
     setRandomImg()
     renderMeme()
@@ -182,7 +179,6 @@ function onLineDelete() {
     deleteLine(getMemeLine())
     renderMeme()
 }
-
 function onAlignTxt(elBtn) {
     const direction = elBtn.dataset.id
     console.log(direction)
@@ -226,37 +222,41 @@ function onShareImg() {
     // Send the image to the server
     doUploadImg(imgDataUrl, onSuccess)
 }
-function doUploadImg(imgDataUrl, onSuccess) {
-    // Upload the image to a server, get back a URL 
-    // call the function onSuccess when done
 
+//mouse events//
+function onClick(ev) {
+    const pos = getEvPos(ev)
+    if (!isLineClicked(pos)) return
+    renderMeme()
 
-    // Pack the image for delivery
-    const formData = new FormData()
-    formData.append('img', imgDataUrl)
-
-    // Send a post req with the image to the server
-    const XHR = new XMLHttpRequest()
-    XHR.onreadystatechange = () => {
-        // If the request is not done, we have no business here yet, so return
-        if (XHR.readyState !== XMLHttpRequest.DONE) return
-        // if the response is not ok, show an error
-        if (XHR.status !== 200) return console.error('Error uploading image')
-        const { responseText: url } = XHR
-        // Same as
-        // const url = XHR.responseText
-
-        // If the response is ok, call the onSuccess callback function, 
-        // that will create the link to facebook using the url we got
-        console.log('Got back live url:', url)
-        onSuccess(url)
-    }
-    XHR.onerror = (req, ev) => {
-        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
-    }
-    XHR.open('POST', '//ca-upload.com/here/upload.php')
-    XHR.send(formData)
 }
+function onDown(ev) {
+    const pos = getEvPos(ev)
+
+}
+function getEvPos(ev) {
+    // console.log(ev)
+
+    let pos = {
+        x: ev.offsetX,
+        y: ev.offsetY,
+    }
+
+    if (TOUCH_EVS.includes(ev.type)) {
+        // Prevent triggering the mouse ev
+        ev.preventDefault()
+        // Gets the first touch point
+        ev = ev.changedTouches[0]
+        // Calc the right pos according to the touch screen
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
+        }
+    }
+    return pos
+}
+
+//"solo" functions//
 function _renderMemeWithNoBorders() {
     gIsBorders = false
     renderMeme()
@@ -269,7 +269,8 @@ function _onEditorPage() {
     document.querySelector('.type-input').focus()
 
 }
-//listener//
+
+//listeners//
 function _addMouseListeners() {
     gElCanvas.addEventListener('click', onClick)
     gElCanvas.addEventListener('mousedown', onDown)
