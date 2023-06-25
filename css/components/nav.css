@@ -1,18 +1,20 @@
 .main-nav-container {
+    position: relative;
     display: flex;
     border-radius: 37px;
+    width: 100%;
     margin: 0.9375rem 1rem 1rem 0.4375rem;
     height: 73px;
-
-
+    
+    
     background-color: #5970c1;
     background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
     color: #fff;
-
-
+    
+    
     /* align-items: center; */
     justify-content: space-between;
-
+    
 }
 
 .nav-links-container {
@@ -20,4 +22,92 @@
     display: flex;
     gap: 3.9375rem;
     align-items: center;
+}
+
+
+#menu__toggle {
+    opacity: 0;
+}
+
+#menu__toggle:checked+.menu__btn>span {
+    transform: rotate(45deg);
+    transform: translate(10px,-30px);
+}
+
+#menu__toggle:checked+.menu__btn>span::before {
+    top: 0;
+    transform: rotate(0deg);
+}
+
+#menu__toggle:checked+.menu__btn>span::after {
+    top: 0;
+    transform: rotate(90deg);
+}
+
+#menu__toggle:checked~.menu__box {
+    right: 0;
+}
+
+.menu__btn {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.menu__btn>span,
+.menu__btn>span::before,
+.menu__btn>span::after {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    transition-duration: .25s;
+}
+
+.menu__btn>span::before {
+    content: '';
+    top: -8px;
+}
+
+.menu__btn>span::after {
+    content: '';
+    top: 8px;
+}
+
+.menu__box {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 150px;
+    height: 100%;
+    margin: 0;
+    padding: 40px 0;
+    list-style: none;
+    background-color: #5970c1;
+    background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+    transition-duration: .25s;
+    z-index: 99;
+}
+
+.menu__item {
+    display: block;
+    padding: 12px 24px;
+    color: #fefefe;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition-duration: .25s;
+}
+
+.menu__item:hover {
+    background-color: #fefefe;
+    color: #21ac91;
 }

@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5.625rem;
-
     margin: 1.3125rem 5.75rem 1.8125rem 6.0625rem;
 }
 
@@ -14,6 +13,7 @@
     /* width: 32.8125rem; */
     height: 546px;
     /* box-shadow: 1px 5px 0 #3d3d3d, inset 0 5px 0 #3d3d3d; */
+    padding: 10px;
     border-radius: 30px;
     background-color: #3d3d3d74;
 
@@ -24,6 +24,8 @@
     grid-template-columns: 1fr;
     /* gap: 20px; */
     align-items: start;
+    
+
 }
 
 /*items*/
@@ -38,7 +40,7 @@
     justify-self: center;
     text-align: center;
     color: #3d3d3d;
-    font-size: 1.5625rem;
+    /* font-size: 1.5625rem; */
     font-weight: 500;
     text-transform: uppercase;
 }
@@ -138,10 +140,11 @@
 }
 
 
-.btn-align{
+.btn-align {
     box-shadow: 1px 5px 0 rgba(252, 252, 252, 0.55), inset 0 5px 0 rgba(255, 255, 255, 0.58);
     background-image: linear-gradient(-38deg, #94daf3 0%, #89baaf 1%, #ffffff 100%);
 }
+
 /*links*/
 .links-container {
     display: flex;

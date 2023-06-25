@@ -17,11 +17,11 @@ function onInit() {
     _addTouchListeners()
 
 
-    window.addEventListener('resize', () => {
-        resizeCanvas()
-        renderCanvas()
-        renderMeme()
-    })
+    // window.addEventListener('resize', () => {
+    //     resizeCanvas()
+    //     renderCanvas()
+    //     renderMeme()
+    // })
 }
 function renderCanvas() {
     //Set the backgournd color 
@@ -51,18 +51,18 @@ function renderMeme() {
         })
         const line = getMemeLine()
         if (!line) return
+        console.log(line.txt)
         document.querySelector('.type-input').placeholder = line.txt
-        // console.log(line)
         if (!gIsBorders) return
         drawBorder(line)
     }
 }
 function drawText(line = {
     txt: 'write somthing',
-    size: 60,
+    size: 40,
     color: 'white',
     align: 'start',
-    pos: { x: 80, y: 80 }
+    pos: { x: 40, y: 80 }
 }) {
     // console.log(line.pos)
     gCtx.lineWidth = 2
@@ -140,13 +140,10 @@ function onHomePage() {
     document.querySelector('.main-saved-content').classList.add('hide')
 }
 function onDownloadMeme(elLink) {
-    gIsBorders = false
-    renderMeme()
-    resizeCanvas()
-    setTimeout(downLoadImg(elLink), 5000)
-    // gIsBorders = true
-    // renderMeme()
-    // _renderMemeWithNoBorders()
+    _renderWithNoBorders()
+    // setTimeout(_downLoadImg(elLink), 5000)
+    _downLoadImg(elLink)
+    // _renderWithBorders()
 }
 function onSetTxtColor(value) {
     setTxtColor(value)
@@ -214,6 +211,7 @@ function onSavedImgClick(elImg) {
     resizeCanvas()
 }
 function onShareImg() {
+    _renderWithNoBorders()
     // Gets the image from the canvas
     const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
 
@@ -225,6 +223,7 @@ function onShareImg() {
 
     // Send the image to the server
     doUploadImg(imgDataUrl, onSuccess)
+    _renderWithBorders()
 }
 
 //mouse events//
@@ -261,10 +260,20 @@ function getEvPos(ev) {
 }
 
 //"solo" functions//
-function downLoadImg(elLink) {
+function _downLoadImg(elLink) {
     const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
     elLink.href = memeContent
 
+}
+function _renderWithNoBorders() {
+    gIsBorders = false
+    renderMeme()
+    resizeCanvas()
+}
+function _renderWithBorders() {
+    gIsBorders = true
+    renderMeme()
+    resizeCanvas()
 }
 function _onEditorPage() {
     document.querySelector('.main-gallery-content').classList.add('hide')

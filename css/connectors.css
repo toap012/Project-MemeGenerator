@@ -1,10 +1,10 @@
 @import url('./setup/variabales.css');
 @import url('./setup/fonts.css');
 @import url('./components/gallery.css');
-@import url('./mq.css');
 @import url('./main.css');
 @import url('./helpers.css');
 @import url('./components/nav.css');
 @import url('./components/editor.css');
 @import url('./components/gallery.filter.css');
 @import url('./setup/fonts.css');
+@import url('./mq.css');

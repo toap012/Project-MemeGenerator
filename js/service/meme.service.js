@@ -151,16 +151,16 @@ function addLine() {
     var y
     switch (gMeme.lines.length) {
         case 0:
-            y = 80
+            y = gElCanvas.height * 0.2
             break
         case 1:
-            y = 400
+            y = gElCanvas.height * 0.8
             break
         case 2:
-            y = 200
+            y = gElCanvas.height / 2
             break
     }
-    if (gMeme.lines.length > 2) y = 200
+    if (gMeme.lines.length > 2) y = gElCanvas.height / 2 + getRandomInt(10, 100)
     var newLine = _createLine(y)
     gMeme.lines.push(newLine)
     gMeme.selectedLineIdx = gMeme.lines.length - 1
@@ -208,12 +208,12 @@ function isLineClicked(clickedPos) {
 function _createLine(y = 80) {
     var line = {
         txt: 'write somthing',
-        size: 60,
+        size: 40,
         color: 'white',
         align: 'start',
         isSelected: false,
         id: makeId(2),
-        pos: { x: 80, y: y },
+        pos: { x: 40, y: y },
         width: 386.80664062
     }
     return line
