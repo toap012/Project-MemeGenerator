@@ -51,7 +51,7 @@ function renderMeme() {
         })
         const line = getMemeLine()
         if (!line) return
-        document.querySelector('.type-input').value = line.txt
+        document.querySelector('.type-input').placeholder = line.txt
         // console.log(line)
         if (!gIsBorders) return
         drawBorder(line)
@@ -66,12 +66,12 @@ function drawText(line = {
 }) {
     // console.log(line.pos)
     gCtx.lineWidth = 2
-    // gCtx.strokeStyle = 'white'
+    gCtx.strokeStyle = 'black'
     gCtx.fillStyle = line.color
     gCtx.font = `${line.size}px Arial`
     gCtx.textAlign = line.align
     gCtx.fillText(line.txt, line.pos.x, line.pos.y) // Draws (fills) a given text at the given (x, y) position.
-    // gCtx.strokeText(line.txt, line.pos.xE, line.pos.yE) // Draws (strokes) a given text at the given (x, y) position.
+    gCtx.strokeText(line.txt, line.pos.x, line.pos.y) // Draws (strokes) a given text at the given (x, y) position.
 
 }
 function drawBorder(line) {
@@ -140,9 +140,13 @@ function onHomePage() {
     document.querySelector('.main-saved-content').classList.add('hide')
 }
 function onDownloadMeme(elLink) {
-    _renderMemeWithNoBorders()
-    const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
-    elLink.href = memeContent
+    gIsBorders = false
+    renderMeme()
+    resizeCanvas()
+    setTimeout(downLoadImg(elLink), 5000)
+    // gIsBorders = true
+    // renderMeme()
+    // _renderMemeWithNoBorders()
 }
 function onSetTxtColor(value) {
     setTxtColor(value)
@@ -176,7 +180,7 @@ function onFlexible() {
     resizeCanvas()
 }
 function onLineDelete() {
-    deleteLine(getMemeLine())
+    deleteLine()
     renderMeme()
 }
 function onAlignTxt(elBtn) {
@@ -257,10 +261,10 @@ function getEvPos(ev) {
 }
 
 //"solo" functions//
-function _renderMemeWithNoBorders() {
-    gIsBorders = false
-    renderMeme()
-    gIsBorders = true
+function downLoadImg(elLink) {
+    const memeContent = gElCanvas.toDataURL('image/jpeg') // image/jpeg the default format
+    elLink.href = memeContent
+
 }
 function _onEditorPage() {
     document.querySelector('.main-gallery-content').classList.add('hide')

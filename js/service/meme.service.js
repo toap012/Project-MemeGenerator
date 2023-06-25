@@ -23,27 +23,18 @@ var gImgs = [
     { id: 18, url: 'img/meme-imgs (square)/18.jpg', keywords: ['toy', 'movie', 'idea'] },
 
 ]
+
 var gMeme = {
     id: makeId(3),
     selectedImgId: 1,
     selectedLineIdx: 0,
-    lines: [
-        {
-            txt: 'write somthing',
-            size: 60,
-            color: 'white',
-            align: 'start',
-            isSelected: false,
-            id: makeId(2),
-            pos: { x: 80, y: 80 },
-            width: 386.806640625
-        }
-    ]
+    lines: [_createLine()]
 }
 var gSavedMemes = []
 var gFilterBy = {
     keywords: ''
 }
+var gLineCount = 0
 
 
 //return functions//
@@ -83,6 +74,7 @@ function getMemeLine() {
     return gMeme.lines[gMeme.selectedLineIdx]
 }
 function getMemeLines() {
+    console.log(gMeme)
     return gMeme.lines
 }
 function getImgById(id) {
@@ -133,12 +125,15 @@ function setLineTxt(value, width) {
 }
 function setMemeImg(imgId) {
     gMeme.selectedImgId = imgId
+    gMeme.lines = [_createLine()]
 }
 function setRandomImg() {
     gMeme.selectedImgId = getRandomInt(0, 19)
 }
-function deleteLine(line) {
-    gMeme.lines.splice(line, 1)
+function deleteLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+
 }
 function setFilterByKeyWords(value) {
     gFilterBy.keywords = value
@@ -153,18 +148,39 @@ function decreaseFontSize() {
     gMeme.lines[gMeme.selectedLineIdx].size -= 10
 }
 function addLine() {
-    gMeme.lines.push({
-        txt: 'write somthing',
-        size: 60,
-        color: 'white',
-        align: 'start',
-        isSelected: false,
-        id: makeId(2),
-        pos: { x: 80, y: 450 },
-        width: 386.806640625
-    })
+    var y
+    switch (gMeme.lines.length) {
+        case 0:
+            y = 80
+            break
+        case 1:
+            y = 400
+            break
+        case 2:
+            y = 200
+            break
+    }
+    if (gMeme.lines.length > 2) y = 200
+    var newLine = _createLine(y)
+    gMeme.lines.push(newLine)
     gMeme.selectedLineIdx = gMeme.lines.length - 1
-    console.log(gMeme.selectedLineIdx)
+}
+function setLineCoords(x, y) {
+    gMeme.lines.forEach((line, idx) => {
+        switch (idx) {
+            case 0:
+                line.pos.y = y * 0.1
+                break
+            case 1:
+                line.pos.y = y * 0.9
+                break
+            case 2:
+                line.pos.y = y * 0.55
+                break
+        }
+        line.pos.x = x
+
+    })
 }
 function switchLine() {
     gMeme.selectedLineIdx++
@@ -186,4 +202,19 @@ function isLineClicked(clickedPos) {
     const currLine = getLineById(line.id)
     gMeme.selectedLineIdx = gMeme.lines.findIndex(line => line.id === currLine.id)
     return true
+}
+
+
+function _createLine(y = 80) {
+    var line = {
+        txt: 'write somthing',
+        size: 60,
+        color: 'white',
+        align: 'start',
+        isSelected: false,
+        id: makeId(2),
+        pos: { x: 80, y: y },
+        width: 386.80664062
+    }
+    return line
 }
