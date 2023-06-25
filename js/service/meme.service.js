@@ -40,7 +40,7 @@ var gLineCount = 0
 //return functions//
 function getSavedImgsToDisplay(memes) {
     const imgUrls = []
-    console.log(memes)
+    // console.log(memes)
     memes.forEach(meme =>
         imgUrls.push(getImgById(meme.selectedImgId).url))
     return imgUrls
@@ -74,7 +74,7 @@ function getMemeLine() {
     return gMeme.lines[gMeme.selectedLineIdx]
 }
 function getMemeLines() {
-    console.log(gMeme)
+    // console.log(gMeme)
     return gMeme.lines
 }
 function getImgById(id) {
@@ -87,7 +87,7 @@ function getLineById(lineId) {
 
 //dom update functions//
 function saveMeme() {
-    console.log(gSavedMemes)
+    // console.log(gSavedMemes)
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
     console.log(savedMemes)
     if (!savedMemes) {
@@ -113,7 +113,7 @@ function saveMeme() {
     saveToLocalStorage(LOCAL_STORAGE_KEY, savedMemes)
 }
 function alignTxt(direction) {
-    gMeme.lines[gMeme.selectedLineIdx].align = direction
+    gMeme.lines[gMeme.selectedLineIdx].pos.x = direction
 }
 function uploadMeme(idx) {
     const savedMemes = loadFromLocalStorage(LOCAL_STORAGE_KEY)
@@ -190,7 +190,7 @@ function switchLine() {
 
 //validate functions//
 function isLineClicked(clickedPos) {
-    console.log(clickedPos)
+    // console.log(clickedPos)
     var line = gMeme.lines.find(line =>
         // console.log(line.pos)
         clickedPos.x <= line.pos.x + line.width && clickedPos.x >= line.pos.x &&
@@ -213,7 +213,7 @@ function _createLine(y = 80) {
         align: 'start',
         isSelected: false,
         id: makeId(2),
-        pos: { x: 40, y: y },
+        pos: { x: 140, y: y },
         width: 386.80664062
     }
     return line

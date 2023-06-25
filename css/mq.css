@@ -9,6 +9,44 @@
         width: 35vw;
     }
 
+    body {
+        overflow: scroll;
+    }
+    
+    .editor-container {
+        grid-template-columns: 1fr;
+        gap: 1.625rem;
+        margin: 0;
+        /* width: 100vw; */
+    }
+
+    .edit-item {
+        /* width: 32.8125rem; */
+        height: 546px;
+        /* box-shadow: 1px 5px 0 #3d3d3d, inset 0 5px 0 #3d3d3d; */
+        padding: 10px;
+        border-radius: 30px;
+        background-color: #3d3d3d74;
+        width: 90vw;
+
+    }
+
+    canvas {
+        width: 90vw;
+    }
+
+    .edits-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2px;
+        justify-content: center;
+    }
+
+    .link-btn {
+        margin-inline: 2rem;
+        width: 100px;
+    }
+
 }
 
 

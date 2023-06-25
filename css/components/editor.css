@@ -33,6 +33,7 @@
 .type-input {
     /* width: 27.8125rem; */
     height: 40px;
+    width: 100%;
     margin-top: 13px;
     box-shadow: 1px 5px 0 #bbc4d1, inset 0 5px 0 #ffffff;
     border-radius: 28px;

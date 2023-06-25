@@ -9,7 +9,7 @@ function onInit() {
     renderGallery()
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    console.log('hi');
+    // console.log('hi');
     resizeCanvas()
     renderCanvas()
     renderMeme()
@@ -51,7 +51,7 @@ function renderMeme() {
         })
         const line = getMemeLine()
         if (!line) return
-        console.log(line.txt)
+        // console.log(line.txt)
         document.querySelector('.type-input').placeholder = line.txt
         if (!gIsBorders) return
         drawBorder(line)
@@ -185,13 +185,13 @@ function onAlignTxt(elBtn) {
     console.log(direction)
     switch (direction) {
         case 'left':
-            alignTxt('end')
+            alignTxt(gElCanvas.width * 0.1)
             break
         case 'center':
-            alignTxt('start')
+            alignTxt(gElCanvas.width / 2)
             break
         case 'right':
-            alignTxt('center')
+            alignTxt(gElCanvas.width * 0.9)
             break
     }
     renderMeme()
