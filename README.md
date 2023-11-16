@@ -9,7 +9,6 @@ A simple meme generator project utilizing HTML5 Canvas and responsive design for
 - [Installation](#installation)
 - [Usage](#usage)
 - [Demo](#demo)
-- [Acknowledgments](#acknowledgments)
 - [Author](#author)
 
 ## Introduction
@@ -38,10 +37,6 @@ Welcome to the Meme Generator! This project allows users to create custom memes 
 
 ![MemeGenerator Demo](demo1.png)
 ![MemeGenerator Demo](demo2.png)
-
-## License
-
-This Meme Generator is licensed under the [MIT License](LICENSE).
 
 ## Author
 
